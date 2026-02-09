@@ -1,42 +1,47 @@
 <!DOCTYPE html>
 <html lang="es">
 <head>
-<meta charset="UTF-8">
-<meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>Para mi San Valentín</title>
-<link rel="stylesheet" href="style.css">
-<link href="https://fonts.googleapis.com/css2?family=Dancing+Script:wght@600&family=Nunito:wght@400;700&display=swap" rel="stylesheet">
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Nuestro San Valentín</title>
+    <link rel="stylesheet" href="style.css">
+    <link href="https://fonts.googleapis.com/css2?family=Dancing+Script:wght@700&family=Nunito:wght@400;700&display=swap" rel="stylesheet">
 </head>
 <body>
 
-<audio id="bg-music" loop>
-<source src="tu_cancion.mp3" type="audio/mpeg">
-</audio>
+    <audio id="bg-music" loop>
+        <source src="tu_cancion.mp3" type="audio/mpeg">
+    </audio>
 
-<div class="main-card">
-<div class="text-container">
-<p class="line hidden" id="line1">Para el hombre que se robó mi corazón:</p>
-<p class="line hidden" id="line2">Si pudiera elegir un lugar seguro, sería a tu lado.</p>
-<p class="line hidden" id="line3">Cuanto más tiempo estoy contigo, más te quiero.</p>
-</div>
+    <div class="main-card">
+        <div class="text-container">
+            <p class="line hidden" id="line1">Para el hombre que se robó mi corazón:</p>
+            <p class="line hidden" id="line2">Si pudiera elegir un lugar seguro, sería a tu lado.</p>
+            <p class="line hidden" id="line3">Cuanto más tiempo estoy contigo, más te quiero.</p>
+        </div>
 
-<div class="canvas-container">
-<canvas id="heart-tree"></canvas>
-</div>
+        <div class="tree-container">
+            <canvas id="tree-canvas"></canvas>
+        </div>
 
-<div class="counter-container hidden" id="counter-box">
-<p class="counter-title">Mi amor por ti comenzó hace...</p>
-<div id="timer">
-<div class="time-box"><span id="days">0</span><span class="label">Días</span></div>
-<div class="time-box"><span id="hours">00</span><span class="label">Horas</span></div>
-<div class="time-box"><span id="minutes">00</span><span class="label">Min</span></div>
-<div class="time-box"><span id="seconds">00</span><span class="label">Seg</span></div>
-</div>
-</div>
+        <div class="counter-container hidden" id="counter-box">
+            <p class="counter-title">Mi amor por ti comenzó hace...</p>
+            <div id="timer">
+                <div class="time-box"><span id="days">0</span><span class="label">Días</span></div>
+                <div class="time-box"><span id="hours">00</span><span class="label">Horas</span></div>
+                <div class="time-box"><span id="minutes">00</span><span class="label">Min</span></div>
+                <div class="time-box"><span id="seconds">00</span><span class="label">Seg</span></div>
+            </div>
+        </div>
+        
+        <div class="click-hint">Dale play al amor ❤️</div>
+    </div>
 
-<p class="click-hint">Haz clic para comenzar ❤️</p>
-</div>
-
-<script src="script.js"></script>
+    <script>
+        // Estas son imágenes de ejemplo que se parecen al video.
+        // El script principal esperará a que carguen.
+        const trunkImageSrc = "https://i.imgur.com/M8C731M.png"; // Imagen de un tronco seco ilustrado
+    </script>
+    <script src="script.js"></script>
 </body>
 </html>
