@@ -22,8 +22,7 @@ function comenzar() {
   iniciado = true;
 
   document.getElementById("pantalla-inicio").style.display = "none";
-  document.getElementById("contenido-regalo").style.display = "block";
-
+  document.getElementById("contenido-regalo").style.display = "flex";
   animarCorazon();
   iniciarTexto();
 }
