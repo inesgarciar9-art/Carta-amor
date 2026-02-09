@@ -1,49 +1,47 @@
-// 🌱 Corazones del árbol
-const heartsContainer = document.getElementById("hearts");
-
-setTimeout(() => {
-  for (let i = 0; i < 40; i++) {
-    const heart = document.createElement("div");
-    heart.classList.add("heart");
-    heart.textContent = "❤️";
-    heart.style.left = Math.random() * 160 + "px";
-    heart.style.top = Math.random() * 160 + "px";
-    heart.style.animationDelay = Math.random() * 3 + "s";
-    heartsContainer.appendChild(heart);
-  }
-}, 3000);
-
-// ⏳ Contador desde el 14 de junio de 2025
+// 💖 CONTADOR DESDE 14 DE JUNIO 2025
 const startDate = new Date("2025-06-14T00:00:00");
-const timer = document.getElementById("timer");
 
-function updateTimer() {
+function updateCounter() {
   const now = new Date();
-  const diff = now - startDate;
+  let diff = now - startDate;
 
   const days = Math.floor(diff / (1000 * 60 * 60 * 24));
-  const hours = Math.floor((diff / (1000 * 60 * 60)) % 24);
-  const minutes = Math.floor((diff / (1000 * 60)) % 60);
-  const seconds = Math.floor((diff / 1000) % 60);
+  diff %= (1000 * 60 * 60 * 24);
 
-  timer.textContent =
-    `Mi amor por ti comenzó hace…
-     ${days} días ${hours} horas ${minutes} minutos ${seconds} segundos 💕`;
+  const hours = Math.floor(diff / (1000 * 60 * 60));
+  diff %= (1000 * 60 * 60);
+
+  const minutes = Math.floor(diff / (1000 * 60));
+  diff %= (1000 * 60);
+
+  const seconds = Math.floor(diff / 1000);
+
+  document.getElementById("counter").innerHTML =
+    `Mi amor por ti comenzó hace…<br>
+     ${days} días ${hours} horas ${minutes} minutos ${seconds} segundos`;
 }
 
-setInterval(updateTimer, 1000);
-updateTimer();
+setInterval(updateCounter, 1000);
+updateCounter();
 
-// 💗 Corazones flotando por toda la pantalla
-setInterval(() => {
+// 🌸 CORAZONES DEL ÁRBOL
+const heartsContainer = document.querySelector(".hearts");
+
+function createHeart() {
   const heart = document.createElement("div");
-  heart.textContent = "💗";
-  heart.style.position = "fixed";
-  heart.style.left = Math.random() * 100 + "vw";
-  heart.style.bottom = "-20px";
-  heart.style.fontSize = Math.random() * 20 + 15 + "px";
-  heart.style.animation = "rise 6s linear forwards";
-  document.body.appendChild(heart);
+  heart.className = "heart";
+  heart.innerHTML = "❤️";
+  heart.style.left = Math.random() * 160 + "px";
+  heart.style.fontSize = Math.random() * 20 + 14 + "px";
+  heart.style.animationDuration = Math.random() * 3 + 4 + "s";
+  heartsContainer.appendChild(heart);
 
   setTimeout(() => heart.remove(), 6000);
-}, 600);
+}
+
+setInterval(createHeart, 600);
+
+// 🎁 BOTÓN SORPRESA
+document.getElementById("surpriseBtn").addEventListener("click", () => {
+  alert("Sabía que llegarías hasta aquí 💖");
+});
