@@ -1,5 +1,5 @@
-/* Estilos base */
 * { margin: 0; padding: 0; box-sizing: border-box; }
+
 body {
     height: 100vh;
     display: flex;
@@ -7,106 +7,76 @@ body {
     align-items: center;
     font-family: 'Nunito', sans-serif;
     overflow: hidden;
-    /* Fondo principal de la tarjeta */
-    background-color: #ffc3d0;
-    background-image: radial-gradient(#ff97b5 2px, transparent 2px);
-    background-size: 35px 35px;
+    background-color: #ffebee;
+    background-image: radial-gradient(#ffcdd2 2px, transparent 2px);
+    background-size: 30px 30px;
 }
 
-/* ==============================
-   PANTALLA INICIAL DECORADA
-============================== */
-#file-screen {
-    position: fixed;
-    top: 0; left: 0; width: 100%; height: 100%;
-    /* Fondo rosado oscuro semi-transparente */
-    background: rgba(80, 20, 40, 0.85);
-    display: flex;
-    justify-content: center;
-    align-items: center;
-    z-index: 1000;
-    transition: opacity 0.8s ease-out, visibility 0.8s;
-    overflow: hidden;
+/* --- Pantalla de Inicio --- */
+#pantalla-inicio {
+    position: fixed; top: 0; left: 0; width: 100%; height: 100%;
+    background: linear-gradient(135deg, #d81b60, #ff80ab);
+    display: flex; flex-direction: column; justify-content: center; align-items: center;
+    z-index: 1000; cursor: pointer; transition: opacity 0.8s ease-out;
 }
 
-/* Caja central del archivo */
-.file-container-box {
-    background: rgba(255, 255, 255, 0.95);
-    padding: 30px;
-    border-radius: 20px;
-    text-align: center;
-    box-shadow: 0 10px 30px rgba(0,0,0,0.2);
-    max-width: 80%;
-    position: relative;
-    z-index: 10; /* Por encima de las decoraciones */
-    border: 3px solid #ff85a1;
-    cursor: pointer;
-    animation: pulseBox 2s infinite ease-in-out;
+.titulo-inicio {
+    font-family: 'Dancing Script', cursive;
+    font-size: 3rem; color: white; text-shadow: 2px 2px 4px rgba(0,0,0,0.3);
+    margin-bottom: 30px; text-align: center; padding: 0 20px;
 }
 
-@keyframes pulseBox {
+.boton-corazon-inicio {
+    font-size: 5rem; animation: latido 1.5s infinite ease-in-out;
+    filter: drop-shadow(0 0 15px rgba(255,255,255,0.6));
+}
+
+.instruccion { color: rgba(255,255,255,0.8); margin-top: 20px; font-size: 0.9rem; }
+
+@keyframes latido {
     0%, 100% { transform: scale(1); }
-    50% { transform: scale(1.03); box-shadow: 0 15px 40px rgba(255, 50, 100, 0.3); }
+    50% { transform: scale(1.15); }
 }
 
-.file-icon-badge img { width: 60px; margin-bottom: 15px; }
-.file-title { display: block; font-size: 1.2rem; font-weight: 700; color: #d32f2f; margin-bottom: 5px; }
-.file-meta { display: block; font-size: 0.8rem; color: #777; margin-bottom: 20px; }
-.tap-instruction { font-weight: bold; color: #E91E63; animation: blink 1.5s infinite; }
-@keyframes blink { 50% { opacity: 0.5; } }
-
-/* Decoraciones flotantes (Emojis) */
-.floating-decorations {
-    position: absolute; top: 0; left: 0; width: 100%; height: 100%;
-    pointer-events: none; z-index: 1;
-}
-.decor {
-    position: absolute; font-size: 2rem; opacity: 0.6;
-    animation: float 15s infinite linear; filter: drop-shadow(0 0 5px rgba(255,255,255,0.3));
-}
-/* Posiciones y velocidades variadas para los emojis */
-.d1 { top: 10%; left: 10%; animation-duration: 12s; font-size: 3rem;}
-.d2 { top: 20%; left: 80%; animation-duration: 18s; animation-delay: -5s;}
-.d3 { top: 70%; left: 15%; animation-duration: 14s; font-size: 2.5rem;}
-.d4 { top: 60%; left: 70%; animation-duration: 20s; animation-delay: -2s;}
-.d5 { top: 40%; left: 40%; animation-duration: 16s; font-size: 1.5rem;}
-.d6 { top: 85%; left: 50%; animation-duration: 13s;}
-.d7 { top: 5%; left: 60%; animation-duration: 17s; font-size: 2rem;}
-.d8 { top: 50%; left: 90%; animation-duration: 15s; animation-delay: -8s;}
-.d9 { top: 30%; left: 20%; animation-duration: 19s; font-size: 2.2rem;}
-.d10{ top: 80%; left: 30%; animation-duration: 14s; animation-delay: -3s;}
-
-@keyframes float {
-    0% { transform: translate(0, 0) rotate(0deg); }
-    33% { transform: translate(30px, -50px) rotate(120deg); }
-    66% { transform: translate(-20px, 20px) rotate(240deg); }
-    100% { transform: translate(0, 0) rotate(360deg); }
+/* --- Tarjeta Principal --- */
+#contenido-regalo {
+    display: none;
+    width: 90%; max-width: 400px; height: 650px;
+    background: #fffbfb; border-radius: 30px; padding: 30px;
+    box-shadow: 0 30px 60px rgba(0,0,0,0.2);
+    flex-direction: column; border: 10px solid white; position: relative;
 }
 
-/* ==============================
-   ESTILOS DE LA TARJETA PRINCIPAL
-============================== */
-.card {
-    background: #fff9f0;
-    width: 90%; max-width: 380px; height: 600px;
-    border-radius: 25px; padding: 25px;
-    box-shadow: 0 25px 50px rgba(0,0,0,0.15);
-    display: flex; flex-direction: column; position: relative;
-    border: 6px solid #fff;
+#area-texto { min-height: 140px; z-index: 10; }
+
+.texto-amor {
+    font-family: 'Dancing Script', cursive; font-size: 1.5rem; color: #c2185b;
+    min-height: 1.6rem; margin-bottom: 10px; line-height: 1.3;
 }
-.typing-text {
-    font-family: 'Dancing Script', cursive; font-size: 1.3rem;
-    color: #b71c1c; min-height: 1.5rem; margin-bottom: 8px;
-    text-shadow: 1px 1px 1px rgba(0,0,0,0.05);
+
+.texto-amor-final {
+    font-family: 'Dancing Script', cursive; font-size: 2.2rem; 
+    color: #c2185b; text-align: center; margin-top: 15px;
 }
-.tree-canvas-container { flex-grow: 1; position: relative; margin: 10px 0; }
+
+.canvas-container { flex-grow: 1; position: relative; margin: 10px 0; }
 canvas { width: 100%; height: 100%; }
-#counter { text-align: center; margin-top: auto; opacity: 0; transition: opacity 1.5s; background: rgba(255,255,255,0.7); padding: 10px; border-radius: 15px;}
-.counter-label { font-size: 0.85rem; color: #795548; margin-bottom: 5px; font-weight: 700; letter-spacing: 1px;}
-#timer { font-weight: 700; color: #D32F2F; font-size: 1.2rem; font-family: 'Nunito', sans-serif;}
-#timer span { font-size: 1.5rem; font-family: 'Dancing Script'; }
 
-/* Clases de utilidad */
-.hidden { visibility: hidden; opacity: 0; position: absolute; pointer-events: none;}
-.active { visibility: visible; opacity: 1;}
-.fade-in-visible { opacity: 1 !important; }
+/* --- Contador --- */
+#contador {
+    text-align: center; opacity: 0; transition: opacity 1.5s ease-in-out;
+    background: #ffeeef; padding: 15px; border-radius: 20px;
+}
+
+.label-contador { font-size: 0.85rem; color: #ad1457; font-weight: 700; margin-bottom: 5px; }
+#tiempo { font-family: 'Nunito', sans-serif; font-weight: 800; color: #d81b60; font-size: 1.3rem; }
+#tiempo span { font-size: 1.6rem; font-family: 'Dancing Script'; }
+
+/* Clases de animación */
+.oculto { opacity: 0; pointer-events: none; }
+.visible { display: flex !important; animation: entrada 1s cubic-bezier(0.175, 0.885, 0.32, 1.275) forwards; }
+
+@keyframes entrada {
+    from { opacity: 0; transform: translateY(50px) scale(0.9); }
+    to { opacity: 1; transform: translateY(0) scale(1); }
+}
