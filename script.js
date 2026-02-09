@@ -1,109 +1,118 @@
-:root {
-    --primary: #ff4d6d;
-    --text: #590d22;
-    --glass: rgba(255, 255, 255, 0.7);
+// CONFIGURACIÓN DE LA FECHA: 14 DE JUNIO DE 2025
+const anniversaryDate = new Date(2025, 5, 14, 0, 0, 0); 
+
+const fileScreen = document.getElementById('file-screen');
+const mainContent = document.getElementById('main-content');
+const music = document.getElementById('bg-music');
+const canvas = document.getElementById('tree');
+const ctx = canvas.getContext('2d');
+
+// Frases a escribir
+const phrases = [
+    "Para el hombre que se robó mi corazón:",
+    "Si pudiera elegir un lugar seguro, sería a tu lado.",
+    "Cuanto más tiempo estoy contigo, más te quiero.",
+    "- I Love You! _"
+];
+
+function typeWriter(text, elementId, delay = 50) {
+    return new Promise(resolve => {
+        let i = 0;
+        const element = document.getElementById(elementId);
+        function type() {
+            if (i < text.length) {
+                element.innerHTML += text.charAt(i);
+                i++;
+                setTimeout(type, delay);
+            } else {
+                resolve();
+            }
+        }
+        type();
+    });
 }
 
-* { margin: 0; padding: 0; box-sizing: border-box; }
-
-body {
-    background: linear-gradient(135deg, #ffafbd 0%, #ffc3a0 100%);
-    height: 100vh;
-    display: flex;
-    justify-content: center;
-    align-items: center;
-    font-family: 'Montserrat', sans-serif;
-    overflow: hidden;
+function startExperience() {
+    fileScreen.classList.add('hidden');
+    mainContent.classList.remove('hidden');
+    music.play();
+    
+    // Iniciar el árbol y luego los textos
+    initTree();
+    runTextSequence();
 }
 
-.container {
-    width: 100%;
-    max-width: 400px;
-    padding: 20px;
-    z-index: 10;
+async function runTextSequence() {
+    await typeWriter(phrases[0], 'line1');
+    await new Promise(r => setTimeout(r, 1000));
+    await typeWriter(phrases[1], 'line2');
+    await new Promise(r => setTimeout(r, 1000));
+    await typeWriter(phrases[2], 'line3');
+    await new Promise(r => setTimeout(r, 1000));
+    await typeWriter(phrases[3], 'final-line');
+    
+    document.getElementById('counter').classList.add('fade-in');
+    setInterval(updateCounter, 1000);
 }
 
-.glass-card {
-    background: var(--glass);
-    backdrop-filter: blur(10px);
-    border-radius: 30px;
-    padding: 30px;
-    border: 1px solid rgba(255, 255, 255, 0.3);
-    box-shadow: 0 20px 40px rgba(0,0,0,0.1);
-    min-height: 550px;
-    display: flex;
-    flex-direction: column;
+function initTree() {
+    const w = canvas.width = 300;
+    const h = canvas.height = 300;
+    
+    // Dibujar Tronco
+    ctx.strokeStyle = '#5d4037';
+    ctx.lineWidth = 6;
+    ctx.beginPath();
+    ctx.moveTo(w/2, h);
+    ctx.quadraticCurveTo(w/2, h-80, w/2, h-100);
+    ctx.stroke();
+
+    // Animación de hojas (corazones)
+    let count = 0;
+    const maxHearts = 150;
+    
+    function addLeaf() {
+        if (count < maxHearts) {
+            const t = Math.random() * Math.PI * 2;
+            const r = Math.sqrt(Math.random());
+            // Fórmula del corazón
+            const x = 16 * Math.pow(Math.sin(t), 3);
+            const y = -(13 * Math.cos(t) - 5 * Math.cos(2*t) - 2 * Math.cos(3*t) - Math.cos(4*t));
+            
+            const finalX = (w/2) + x * 6 * r;
+            const finalY = (h-180) + y * 6 * r;
+            
+            drawMiniHeart(finalX, finalY);
+            count++;
+            setTimeout(addLeaf, 50);
+        }
+    }
+    addLeaf();
 }
 
-.text-sequence {
-    height: 120px;
-    text-align: center;
+function drawMiniHeart(x, y) {
+    const size = Math.random() * 5 + 3;
+    ctx.fillStyle = `hsl(${Math.random() * 20 + 340}, 80%, 60%)`;
+    ctx.beginPath();
+    ctx.moveTo(x, y);
+    ctx.bezierCurveTo(x - size, y - size, x - size * 1.5, y + size, x, y + size * 2);
+    ctx.bezierCurveTo(x + size * 1.5, y + size, x + size, y - size, x, y);
+    ctx.fill();
 }
 
-h1, h2 {
-    font-family: 'Caveat', cursive;
-    color: var(--text);
-    line-height: 1.2;
-    transition: all 1s ease;
+function updateCounter() {
+    const now = new Date();
+    const diff = now - anniversaryDate;
+    
+    const d = Math.floor(diff / (1000 * 60 * 60 * 24));
+    const h = Math.floor((diff / (1000 * 60 * 60)) % 24);
+    const m = Math.floor((diff / 1000 / 60) % 60);
+    const s = Math.floor((diff / 1000) % 60);
+
+    document.getElementById('days').innerText = d;
+    document.getElementById('hours').innerText = h.toString().padStart(2, '0');
+    document.getElementById('minutes').innerText = m.toString().padStart(2, '0');
+    document.getElementById('seconds').innerText = s.toString().padStart(2, '0');
 }
 
-h1 { font-size: 1.8rem; }
-h2 { font-size: 2rem; color: var(--primary); }
-
-p { font-size: 0.9rem; color: #800f2f; margin: 10px 0; font-weight: 300; }
-
-.canvas-wrapper {
-    flex-grow: 1;
-    position: relative;
-}
-
-canvas {
-    width: 100%;
-    height: 100%;
-}
-
-/* Contador Estilizado */
-#counter {
-    margin-top: 20px;
-    text-align: center;
-    border-top: 1px solid rgba(0,0,0,0.05);
-    padding-top: 15px;
-}
-
-.counter-label { font-size: 0.7rem; text-transform: uppercase; letter-spacing: 2px; color: #c9184a; }
-
-.timer-grid {
-    display: flex;
-    justify-content: space-around;
-    margin-top: 10px;
-}
-
-.t-item { display: flex; flex-direction: column; }
-.t-item span { font-size: 1.4rem; font-weight: 600; color: var(--text); }
-.t-item label { font-size: 0.6rem; color: #ff758f; font-weight: 600; }
-
-/* Animaciones */
-.hidden { opacity: 0; transform: translateY(10px); }
-.visible { opacity: 1; transform: translateY(0); }
-
-#start-btn {
-    position: absolute;
-    top: 50%;
-    left: 50%;
-    transform: translate(-50%, -50%);
-    background: white;
-    padding: 15px 25px;
-    border-radius: 50px;
-    cursor: pointer;
-    box-shadow: 0 10px 20px rgba(0,0,0,0.1);
-    font-weight: 600;
-    color: var(--primary);
-    z-index: 100;
-    animation: pulse 2s infinite;
-}
-
-@keyframes pulse {
-    0% { transform: translate(-50%, -50%) scale(1); }
-    50% { transform: translate(-50%, -50%) scale(1.05); }
-    100% { transform: translate(-50%, -50%) scale(1); }
-}
+fileScreen.addEventListener('click', startExperience);
