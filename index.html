@@ -1,41 +1,197 @@
 <!DOCTYPE html>
 <html lang="es">
 <head>
-  <meta charset="UTF-8">
-  <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>Mi corazón</title>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Mi corazón</title>
 
-  <link href="https://fonts.googleapis.com/css2?family=Dancing+Script:wght@700&family=Nunito:wght@400;700&display=swap" rel="stylesheet">
-  <link rel="stylesheet" href="style.css">
+<link href="https://fonts.googleapis.com/css2?family=Dancing+Script:wght@700&family=Nunito:wght@400;700&display=swap" rel="stylesheet">
+
+<style>
+* { margin:0; padding:0; box-sizing:border-box; }
+
+body {
+  min-height:100vh;
+  display:flex;
+  justify-content:center;
+  align-items:center;
+  background:#ffebee;
+  font-family:'Nunito', sans-serif;
+}
+
+/* Pantalla inicio */
+#inicio {
+  position:fixed;
+  inset:0;
+  background:linear-gradient(135deg,#d81b60,#ff80ab);
+  display:flex;
+  justify-content:center;
+  align-items:center;
+  cursor:pointer;
+  z-index:10;
+}
+
+#inicio h1 {
+  font-family:'Dancing Script', cursive;
+  font-size:2.5rem;
+  color:white;
+  text-align:center;
+  animation:latido 1.5s infinite;
+}
+
+@keyframes latido {
+  0%,100%{transform:scale(1);}
+  50%{transform:scale(1.1);}
+}
+
+/* Contenido */
+#contenido {
+  display:none;
+  flex-direction:column;
+  justify-content:space-between;
+  width:90%;
+  max-width:400px;
+  height:650px;
+  background:white;
+  border-radius:30px;
+  padding:25px;
+  box-shadow:0 20px 50px rgba(0,0,0,.2);
+  text-align:center;
+}
+
+.texto p {
+  font-family:'Dancing Script', cursive;
+  font-size:1.6rem;
+  color:#c2185b;
+  margin-bottom:10px;
+}
+
+.texto .final {
+  font-size:2.2rem;
+}
+
+canvas {
+  width:100%;
+  height:260px;
+}
+
+/* Contador */
+#contador {
+  opacity:0;
+  transition:opacity 1.5s;
+}
+
+#contador p {
+  font-size:0.85rem;
+  color:#ad1457;
+}
+
+#contador div {
+  font-size:1.4rem;
+  font-weight:bold;
+  color:#d81b60;
+}
+</style>
 </head>
+
 <body>
 
-  <!-- Pantalla inicial -->
-  <div id="inicio" onclick="abrir()">
-    <h1>Toca para abrir mi corazón ❤️</h1>
+<div id="inicio" onclick="abrir()">
+  <h1>Toca para abrir mi corazón ❤️</h1>
+</div>
+
+<div id="contenido">
+  <div class="texto">
+    <p id="t1"></p>
+    <p id="t2"></p>
+    <p id="t3" class="final"></p>
   </div>
 
-  <!-- Contenido -->
-  <div id="contenido">
-    <div class="texto">
-      <p id="t1"></p>
-      <p id="t2"></p>
-      <p id="t3" class="final"></p>
-    </div>
+  <canvas id="corazon"></canvas>
 
-    <canvas id="corazon"></canvas>
-
-    <div id="contador">
-      <p>Nuestro amor comenzó hace…</p>
-      <div>
-        <span id="d">0</span>d
-        <span id="h">00</span>h
-        <span id="m">00</span>m
-        <span id="s">00</span>s
-      </div>
+  <div id="contador">
+    <p>Nuestro amor comenzó hace…</p>
+    <div>
+      <span id="d">0</span>d
+      <span id="h">00</span>h
+      <span id="m">00</span>m
+      <span id="s">00</span>s
     </div>
   </div>
+</div>
 
-  <script src="script.js"></script>
+<script>
+const inicioFecha = new Date(2025,1,14);
+
+const textos = [
+  "Para el hombre que se robó mi corazón",
+  "Nuestro primer 14 de febrero de muchos más 🫶",
+  "Te quiero 💖"
+];
+
+function abrir() {
+  document.getElementById("inicio").style.display="none";
+  const c = document.getElementById("contenido");
+  c.style.display="flex";
+  escribir();
+  dibujarCorazon();
+  setTimeout(()=>{
+    document.getElementById("contador").style.opacity=1;
+    actualizar();
+    setInterval(actualizar,1000);
+  },2000);
+}
+
+async function escribir(){
+  for(let i=0;i<textos.length;i++){
+    const el=document.getElementById("t"+(i+1));
+    for(let l of textos[i]){
+      el.innerHTML+=l;
+      await new Promise(r=>setTimeout(r,70));
+    }
+    await new Promise(r=>setTimeout(r,400));
+  }
+}
+
+function dibujarCorazon(){
+  const c=document.getElementById("corazon");
+  const ctx=c.getContext("2d");
+  c.width=c.offsetWidth;
+  c.height=c.offsetHeight;
+  const scale=c.width/40;
+
+  for(let i=0;i<300;i++){
+    const t=Math.random()*Math.PI*2;
+    const r=Math.sqrt(Math.random());
+    const x=16*Math.pow(Math.sin(t),3);
+    const y=-(13*Math.cos(t)-5*Math.cos(2*t)-2*Math.cos(3*t)-Math.cos(4*t));
+    const px=c.width/2+x*scale*r;
+    const py=c.height/2+y*scale*r;
+    ctx.fillStyle="rgba(216,27,96,.85)";
+    ctx.beginPath();
+    ctx.arc(px,py,4,0,Math.PI*2);
+    ctx.fill();
+  }
+}
+
+function actualizar(){
+  const ahora=new Date();
+  let dif=ahora-inicioFecha;
+  const d=Math.floor(dif/(1000*60*60*24));
+  const h=Math.floor(dif/(1000*60*60)%24);
+  const m=Math.floor(dif/(1000*60)%60);
+  const s=Math.floor(dif/1000%60);
+  dEl.textContent=d;
+  hEl.textContent=h.toString().padStart(2,"0");
+  mEl.textContent=m.toString().padStart(2,"0");
+  sEl.textContent=s.toString().padStart(2,"0");
+}
+
+const dEl=document.getElementById("d");
+const hEl=document.getElementById("h");
+const mEl=document.getElementById("m");
+const sEl=document.getElementById("s");
+</script>
+
 </body>
 </html>
