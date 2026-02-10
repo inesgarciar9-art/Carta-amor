@@ -1,4 +1,4 @@
-  <!DOCTYPE html>
+<!DOCTYPE html>
 <html lang="es">
 <head>
 <meta charset="UTF-8">
@@ -91,7 +91,7 @@ body{
 /* corazón */
 canvas{
   width:100%;
-  height:320px;
+  height:300px;
   margin:20px 0;
 }
 
@@ -106,12 +106,15 @@ canvas{
 
 <body>
 
+<!-- corazones flotando -->
 <div class="corazones"></div>
 
+<!-- pantalla inicial -->
 <div id="inicio" onclick="abrir()">
   <h1>Pincha aquí para abrir mi corazón 💖✨</h1>
 </div>
 
+<!-- contenido -->
 <div id="contenido">
   <div class="mensaje">
     <p class="titulo">Para Ricardo quien se robó mi corazón un día 14</p>
@@ -133,12 +136,12 @@ canvas{
 <script>
 /* corazones flotantes */
 const cont=document.querySelector('.corazones');
-for(let i=0;i<40;i++){
+for(let i=0;i<30;i++){
   const s=document.createElement('span');
   s.innerText=['💖','💕','💗','💘'][Math.floor(Math.random()*4)];
   s.style.left=Math.random()*100+'vw';
-  s.style.animationDuration=10+Math.random()*12+'s';
-  s.style.fontSize=20+Math.random()*22+'px';
+  s.style.animationDuration=10+Math.random()*10+'s';
+  s.style.fontSize=20+Math.random()*20+'px';
   cont.appendChild(s);
 }
 
@@ -164,7 +167,7 @@ function contar(){
   `${dias} días ${h}h ${m}m ${s}s`;
 }
 
-/* CORAZÓN RELLENO */
+/* corazón gigante relleno completo de corazones */
 function dibujarCorazon(){
   const c=document.getElementById('corazon');
   const ctx=c.getContext('2d');
@@ -172,18 +175,16 @@ function dibujarCorazon(){
   c.height=c.offsetHeight;
 
   const colores=['#FFD700','#FF69B4','#1e3a8a'];
-  const escala=11;
 
-  for(let i=0;i<3500;i++){
+  for(let i=0;i<1200;i++){
     const t=Math.random()*Math.PI*2;
-    const r=Math.random(); // CLAVE: relleno completo
+    const r=Math.sqrt(Math.random());
     const x=16*Math.pow(Math.sin(t),3);
     const y=-(13*Math.cos(t)-5*Math.cos(2*t)-2*Math.cos(3*t)-Math.cos(4*t));
-    const px=c.width/2+x*escala*r;
-    const py=c.height/2+y*escala*r;
-
+    const px=c.width/2+x*10*r;
+    const py=c.height/2+y*10*r;
     ctx.fillStyle=colores[Math.floor(Math.random()*colores.length)];
-    ctx.font='13px serif';
+    ctx.font='12px serif';
     ctx.fillText('❤',px,py);
   }
 }
