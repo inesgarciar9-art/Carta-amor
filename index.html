@@ -3,110 +3,149 @@
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>Mi Corazón</title>
+<title>Para Ti 💖</title>
 
 <style>
 body{
   margin:0;
-  font-family:'Courier New', cursive;
-  background:linear-gradient(135deg,#1a0b14,#ff4f9a);
-  overflow:hidden;
+  font-family: Arial, sans-serif;
+  background: linear-gradient(135deg,#ff4f9a,#ff9a9e);
   color:white;
   text-align:center;
 }
 
-/* pantalla inicio */
+/* INICIO */
 #inicio{
   position:fixed;
   inset:0;
   display:flex;
   justify-content:center;
   align-items:center;
-  text-align:center;
-  cursor:pointer;
+  background: linear-gradient(135deg,#ff4f9a,#ff9a9e);
   z-index:10;
+  cursor:pointer;
 }
 
 #inicio h1{
-  font-size:2.5rem;
-  animation:latido 1.4s infinite;
+  font-size:28px;
+  padding:20px;
 }
 
-@keyframes latido{
-  50%{transform:scale(1.1)}
-}
-
-/* pantalla video */
-#pantallaVideo{
-  position:fixed;
-  inset:0;
+/* VIDEO */
+#videoSection{
   display:none;
-  flex-direction:column;
-  justify-content:center;
-  align-items:center;
-  background:black;
-  z-index:11;
+  padding:20px;
 }
 
 iframe{
-  width:90%;
-  max-width:420px;
-  height:70vh;
+  width:100%;
+  max-width:400px;
+  height:500px;
   border:none;
-  border-radius:20px;
+  border-radius:15px;
 }
 
-#continuar{
-  margin-top:20px;
-  padding:12px 22px;
-  border:none;
-  border-radius:30px;
-  background:white;
-  color:#ff4f9a;
-  font-weight:bold;
-  cursor:pointer;
-}
-
-/* contenido final */
+/* CONTENIDO */
 #contenido{
   display:none;
   padding:20px;
+}
+
+h2{
+  font-size:26px;
+}
+
+button{
+  padding:10px 20px;
+  margin:10px;
+  border:none;
+  border-radius:20px;
+  font-size:16px;
+  cursor:pointer;
+}
+
+#si{
+  background:#ff2e63;
+  color:white;
+}
+
+#no{
+  background:white;
+  color:#ff2e63;
+}
+
+#contador{
+  margin-top:20px;
+  font-size:18px;
+  font-weight:bold;
 }
 </style>
 </head>
 
 <body>
 
-<div id="inicio" onclick="abrir()">
-  <h1>Pincha aquí para abrir mi corazón 💖✨</h1>
+<div id="inicio" onclick="mostrarVideo()">
+  <h1>Toca aquí 💖</h1>
 </div>
 
-<div id="pantallaVideo">
+<div id="videoSection">
   <iframe 
-    src="https://drive.google.com/file/d/19WB5fkImc0CJ9GuGHwCHuJMLDe11AyID/preview"
-    allow="autoplay">
+  src="https://drive.google.com/file/d/19WB5fkImc0CJ9GuGHwCHuJMLDe11AyID/preview"
+  allow="autoplay">
   </iframe>
-  <button id="continuar" onclick="mostrarContenido()">Continuar 💌</button>
+
+  <br><br>
+  <button onclick="mostrarContenido()">Continuar 💌</button>
 </div>
 
 <div id="contenido">
-  <h2>Para Ricardo quien se robó mi corazón un día 14</h2>
-  <p>
-    Feliz San Valentín a mi hombrecito, el primero de muchos juntos,
-    que aunque no estemos juntos hoy, siempre nos llevamos en el corazón.
-  </p>
-  <p><strong>💕 Te quiero muchísimo y te adoro demasiado 💕</strong></p>
+  <h2>💘 ¿Quieres ser mi Valentín? 💘</h2>
+
+  <button id="si">Sí 💖</button>
+  <button id="no">No 😅</button>
+
+  <div id="contador"></div>
 </div>
 
 <script>
-function abrir(){
-  document.getElementById('inicio').style.display='none';
-  document.getElementById('pantallaVideo').style.display='flex';
+function mostrarVideo(){
+  document.getElementById("inicio").style.display="none";
+  document.getElementById("videoSection").style.display="block";
 }
 
 function mostrarContenido(){
-  document.getElementById('pantallaVideo').style.display='none';
-  document.getElementById('contenido').style.display='block';
+  document.getElementById("videoSection").style.display="none";
+  document.getElementById("contenido").style.display="block";
+  iniciarContador();
+}
+
+let intentos=0;
+document.getElementById("no").addEventListener("click",function(){
+  intentos++;
+  if(intentos==1){
+    this.innerText="Ups inténtalo otra vez 😅";
+  }else if(intentos==2){
+    this.innerText="Esa no es la respuesta correcta 😳";
+  }else{
+    this.style.position="absolute";
+    this.style.top=Math.random()*80+"%";
+    this.style.left=Math.random()*80+"%";
+  }
+});
+
+document.getElementById("si").addEventListener("click",function(){
+  document.querySelector("h2").innerHTML="💖 ¡Sabía que dirías que sí! 💖";
+});
+
+function iniciarContador(){
+  const fechaInicio=new Date("February 14, 2024 00:00:00").getTime();
+  setInterval(function(){
+    const ahora=new Date().getTime();
+    const diferencia=ahora-fechaInicio;
+    const dias=Math.floor(diferencia/(1000*60*60*24));
+    document.getElementById("contador").innerHTML=
+    "💞 Llevamos "+dias+" días juntos 💞";
+  },1000);
 }
 </script>
 
