@@ -3,167 +3,235 @@
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>Para Ricardo 💖</title>
+<title>Mi Corazón</title>
+
+<link href="https://fonts.googleapis.com/css2?family=Dancing+Script:wght@700&family=Nunito:wght@400;700&display=swap" rel="stylesheet">
 
 <style>
+*{margin:0;padding:0;box-sizing:border-box}
+
 body{
-margin:0;
-padding:0;
-font-family: 'Courier New', cursive;
-background: linear-gradient(rgba(0,0,0,0.5), rgba(0,0,0,0.5)),
-linear-gradient(135deg,#ff7eb9,#ff65a3,#7a5cff);
-color:white;
-text-align:center;
-overflow-x:hidden;
+  height:100vh;
+  font-family:'Nunito',sans-serif;
+  overflow:hidden;
+  color:white;
+  background:
+    radial-gradient(circle at top, rgba(255,105,180,0.35), transparent 60%),
+    linear-gradient(135deg, #1a0b14, #ff4f9a);
 }
 
-section{
-min-height:100vh;
-display:flex;
-flex-direction:column;
-justify-content:center;
-align-items:center;
-padding:20px;
+/* corazones flotando */
+.corazones span{
+  position:fixed;
+  bottom:-10vh;
+  animation:flotar linear infinite;
+  opacity:.85;
 }
-
-button{
-background:white;
-color:#ff4fa3;
-border:none;
-padding:15px 25px;
-font-size:18px;
-border-radius:30px;
-cursor:pointer;
-margin-top:20px;
-}
-
-video{
-width:80%;
-max-width:400px;
-border-radius:20px;
-margin-top:20px;
-}
-
-.corazon{
-position:absolute;
-color:pink;
-animation:flotar 6s linear infinite;
-}
-
 @keyframes flotar{
-0%{transform:translateY(0);}
-100%{transform:translateY(-100vh);}
+  from{transform:translateY(0)}
+  to{transform:translateY(-120vh)}
 }
 
-#contenidoFinal{
-display:none;
+/* pantalla inicio */
+#inicio{
+  position:fixed;
+  inset:0;
+  display:flex;
+  justify-content:center;
+  align-items:center;
+  text-align:center;
+  cursor:pointer;
+  z-index:10;
 }
+
+#inicio h1{
+  font-family:'Dancing Script',cursive;
+  font-size:2.6rem;
+  animation:latido 1.4s infinite;
+  text-shadow:0 0 25px rgba(255,120,200,.8);
+}
+
+@keyframes latido{
+  50%{transform:scale(1.1)}
+}
+
+/* pantalla video */
 #pantallaVideo{
-display:none;
+  position:fixed;
+  inset:0;
+  display:none;
+  flex-direction:column;
+  justify-content:center;
+  align-items:center;
+  background:rgba(0,0,0,0.6);
+  z-index:11;
+}
+
+#pantallaVideo video{
+  width:80%;
+  max-width:400px;
+  border-radius:20px;
+}
+
+#continuar{
+  margin-top:20px;
+  padding:12px 22px;
+  border:none;
+  border-radius:30px;
+  background:white;
+  color:#ff4f9a;
+  font-weight:bold;
+  cursor:pointer;
+}
+
+/* contenido */
+#contenido{
+  display:none;
+  height:100vh;
+  padding:20px;
+  text-align:center;
+}
+
+.mensaje{
+  margin-top:15px;
+}
+
+.mensaje .titulo{
+  font-family:'Dancing Script',cursive;
+  font-size:1.9rem;
+}
+
+.mensaje p{
+  margin-top:10px;
+  font-size:1.05rem;
+}
+
+.final{
+  margin-top:15px;
+  font-weight:bold;
+}
+
+.canvas-wrap{
+  width:100%;
+  max-width:360px;
+  margin:18px auto;
+}
+
+canvas{
+  width:100%;
+  aspect-ratio: 1 / 1;
+}
+
+.contador{
+  font-weight:bold;
+  font-size:1.3rem;
 }
 </style>
 </head>
 
 <body>
 
-<!-- Música -->
-<audio id="musica" src="musica.mp3"></audio>
+<audio id="musica">
+  <source src="musica.mp3" type="audio/mpeg">
+</audio>
 
-<!-- Pantalla 1 -->
-<section id="inicio">
-<h1>Pincha aquí para abrir mi corazón 💖✨</h1>
-<button onclick="mostrarVideo()">Abrir</button>
-</section>
+<div class="corazones"></div>
 
-<!-- Pantalla 2 -->
-<section id="pantallaVideo">
-<h2>💖</h2>
-<video src="video.mp4" controls></video>
-<button onclick="mostrarContenido()">Continuar</button>
-</section>
+<div id="inicio" onclick="abrir()">
+  <h1>Pincha aquí para abrir mi corazón 💖✨</h1>
+</div>
 
-<!-- Pantalla Final (TU CONTENIDO ORIGINAL) -->
-<section id="contenidoFinal">
-<h2>Para Ricardo 💌</h2>
+<div id="pantallaVideo">
+  <video id="miVideo" controls>
+    <source src="video.mp4" type="video/mp4">
+  </video>
+  <button id="continuar" onclick="mostrarContenido()">Continuar 💌</button>
+</div>
 
-<p>
-Aquí va tu texto original exactamente como lo tenías…
-</p>
+<div id="contenido">
+  <div class="mensaje">
+    <p class="titulo">Para Ricardo quien se robó mi corazón un día 14</p>
+    <p>
+      Feliz San Valentín a mi hombrecito, el primero de muchos juntos,
+      que aunque no estemos juntos hoy, siempre nos llevamos en el corazón.
+    </p>
+    <p class="final">💕 Te quiero muchísimo y te adoro demasiado 💕</p>
+  </div>
 
-<h3 id="contador"></h3>
+  <div class="canvas-wrap">
+    <canvas id="corazon"></canvas>
+  </div>
 
-<div id="corazonGigante" style="font-size:12px; line-height:10px;"></div>
-</section>
+  <div class="contador">
+    Nuestro amor comenzó hace…
+    <div id="tiempo"></div>
+  </div>
+</div>
 
 <script>
-function mostrarVideo(){
-document.getElementById("inicio").style.display="none";
-document.getElementById("pantallaVideo").style.display="flex";
-document.getElementById("musica").play();
+
+/* corazones flotantes */
+const cont=document.querySelector('.corazones');
+for(let i=0;i<35;i++){
+  const s=document.createElement('span');
+  s.innerText=['💖','💕','💗','💘'][Math.floor(Math.random()*4)];
+  s.style.left=Math.random()*100+'vw';
+  s.style.animationDuration=10+Math.random()*12+'s';
+  s.style.fontSize=18+Math.random()*20+'px';
+  cont.appendChild(s);
 }
 
+/* abrir */
+function abrir(){
+  document.getElementById('inicio').style.display='none';
+  document.getElementById('pantallaVideo').style.display='flex';
+  document.getElementById('musica').play().catch(()=>{});
+}
+
+/* mostrar contenido final */
 function mostrarContenido(){
-document.getElementById("pantallaVideo").style.display="none";
-document.getElementById("contenidoFinal").style.display="flex";
+  document.getElementById('pantallaVideo').style.display='none';
+  document.getElementById('contenido').style.display='block';
+  dibujarCorazon();
+  contar();
+  setInterval(contar,1000);
 }
 
-function crearCorazones(){
-for(let i=0;i<30;i++){
-let c=document.createElement("div");
-c.className="corazon";
-c.innerHTML="💖";
-c.style.left=Math.random()*100+"vw";
-c.style.animationDuration=(4+Math.random()*4)+"s";
-document.body.appendChild(c);
+/* contador */
+const inicioFecha=new Date(2025,5,14);
+function contar(){
+  const ahora=new Date();
+  let d=ahora-inicioFecha;
+  const dias=Math.floor(d/(1000*60*60*24));
+  const h=Math.floor((d/(1000*60*60))%24);
+  const m=Math.floor((d/(1000*60))%60);
+  const s=Math.floor((d/1000)%60);
+  document.getElementById('tiempo').innerText=
+  `${dias} días ${h}h ${m}m ${s}s`;
 }
-}
-crearCorazones();
 
-/* CONTADOR */
-const fechaInicio = new Date("2024-01-01");
-function actualizarContador(){
-const ahora = new Date();
-const diferencia = ahora - fechaInicio;
-const dias = Math.floor(diferencia/(1000*60*60*24));
-document.getElementById("contador").innerText=
-"Llevamos "+dias+" días juntos 💞";
-}
-actualizarContador();
+/* corazón */
+function dibujarCorazon(){
+  const c=document.getElementById('corazon');
+  const ctx=c.getContext('2d');
+  c.width=c.offsetWidth;
+  c.height=c.offsetWidth;
+  const colores=['#FFD700','#FF69B4','#1e3a8a'];
+  const escala=c.width/36;
 
-/* CORAZÓN GIGANTE RELLENO */
-const heart = [
-"  *****     *****  ",
-" ********   ******** ",
-"*********** ***********",
-"***********************",
-"***********************",
-" ********************* ",
-"  *******************  ",
-"   *****************   ",
-"    ***************    ",
-"     *************     ",
-"      ***********      ",
-"       *********       ",
-"        *******        ",
-"         *****         ",
-"          ***          ",
-"           *           "
-];
+  for(let i=0;i<3800;i++){
+    const t=Math.random()*Math.PI*2;
+    const r=Math.random();
+    const x=16*Math.pow(Math.sin(t),3);
+    const y=-(13*Math.cos(t)-5*Math.cos(2*t)-2*Math.cos(3*t)-Math.cos(4*t));
+    const px=c.width/2+x*escala*r;
+    const py=c.height/2+y*escala*r;
 
-let heartHTML="";
-heart.forEach(line=>{
-for(let char of line){
-if(char==="*"){
-let colores=["💛","💙","💖"];
-heartHTML+=colores[Math.floor(Math.random()*3)];
-}else{
-heartHTML+=" ";
+    ctx.fillStyle=colores[Math.floor(Math.random()*colores.length)];
+    ctx.font=(escala*1.35)+'px serif';
+    ctx.fillText('❤',px,py);
+  }
 }
-}
-heartHTML+="<br>";
-});
-document.getElementById("corazonGigante").innerHTML=heartHTML;
-
 </script>
 
 </body>
